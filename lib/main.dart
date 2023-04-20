@@ -1,42 +1,126 @@
 import 'package:flutter/material.dart';
+// Uncomment lines 3 and 6 to view the visual layout at runtime.
+// import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
-void main() => runApp(MyApp());
+void main() {
+  // debugPaintSizeEnabled = true;
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    Widget titleSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: Row(
+        children: [
+          Expanded(
+            /*1*/
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /*2*/
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: const Text(
+                    //Nombre del lugar
+                    'STARBUCKS JUAREZ, CHIHUAHUA',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                //Ubicacion
+                Text(
+                  'Ciudad Juarez, Mexico',
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          /*3*/
+          Icon(
+            Icons.star,
+            color: Color(0xFFffa420),
+          ),
+          const Text('41'),
+        ],
       ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
-  }
-}
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});  
+    Color color = Theme.of(context).primaryColor;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
+    Widget buttonSection = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        //Iconos
+        _buildButtonColumn(Color(0xFF0B895E), Icons.call, 'LLAMAR'),
+        _buildButtonColumn(Color(0xFF0B895E), Icons.near_me, 'RUTA'),
+        _buildButtonColumn(Color(0xFF0B895E), Icons.share, 'COMPARTIR'),
+      ],
+    );
+
+    Widget textSection = const Padding(
+      padding: EdgeInsets.all(32),
+      //Contenido
+      child: Text(
+        'Starbucks es una empresa de café fundada en Estados Unidos que tiene sucursales en más de 70 países1. Su misión es aportar una sensación de cercanía y conexión con el café y su tradición2. Su nombre se inspira en la novela Moby Dick y su primera cafetería se abrió en Seattle en 19713.',
+        softWrap: true,
       ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
+    );
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+        color: Color(0xFF0B895E),
+      )),
+      //Titulo AppBar
+      title: 'Flutter layout',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Starbucks Cafeteria'),
+        ),
+        body: ListView(
+          children: [
+            // Imagen
+            Image.network(
+              'https://lh5.googleusercontent.com/p/AF1QipOZLZTDtVAA1ze45w0QS0Et7XvPycHde-CR7aJQ=w408-h327-k-no',
+              width: 600,
+              height: 240,
+              fit: BoxFit.cover,
+            ),
+            titleSection,
+            buttonSection,
+            textSection,
+          ],
         ),
       ),
+    );
+  }
+
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: color),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
