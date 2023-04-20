@@ -80,10 +80,12 @@ class MyApp extends StatelessWidget {
         color: Color(0xFF0B895E),
       )),
       //Titulo AppBar
-      title: 'Flutter layout',
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Starbucks Cafeteria'),
+          title: const Text(
+            'Starbucks Cafeteria',
+            //style: TextStyle(color: Color(0xffff6fe1)),
+          ),
         ),
         body: ListView(
           children: [
